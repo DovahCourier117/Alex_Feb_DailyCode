@@ -17,9 +17,11 @@ int main()
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 
 	al_draw_filled_rectangle(325,285,475,325, al_map_rgb(0,125,0));
-
 	al_draw_text(font, al_map_rgb(255, 255, 255), 400, 300, ALLEGRO_ALIGN_CENTER, "STREET, Ave.");
+	
 	al_flip_display();
+
 	al_rest(5.0);
+	
 	return 0;
 }
