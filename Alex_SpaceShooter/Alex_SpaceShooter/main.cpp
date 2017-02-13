@@ -8,8 +8,8 @@ int main() {//start main
 
 	bool done = false;//variable for game loop
 
-	int pos_x = width / 2;
-	int pos_y = height / 2;
+	float pos_x = width / 2;
+	float pos_y = height / 2;
 
 
 	ALLEGRO_DISPLAY* display = NULL;
@@ -19,6 +19,7 @@ int main() {//start main
 		return -1;
 
 	display = al_create_display(width, height);//create display
+	
 
 	if (!display)//test display
 		return -1;
@@ -35,12 +36,43 @@ int main() {//start main
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
 
-		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+
+		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {//start if (controls keyboard input)
+
+			switch (ev.keyboard.keycode) {//start switch
+
+			case ALLEGRO_KEY_UP:
+				pos_y -= 10;
+				break;
+			case ALLEGRO_KEY_DOWN:
+				pos_y += 10;
+				break;
+			case ALLEGRO_KEY_LEFT:
+				pos_x -= 10;
+				break;
+			case ALLEGRO_KEY_RIGHT:
+				pos_x += 10;
+				break;
+			case ALLEGRO_KEY_ESCAPE://close game
+				done = true;
+				break;
+			}//end switch
+
+
+		}//end if
+
+		if (ev.type == ALLEGRO_EVENT_KEY_UP) {//open if
+
+			if(ev.keyboard.keycode)
+
+
+		}//close if
 
 
 
-
-		}
+		al_draw_filled_rectangle(pos_x, pos_y, pos_x+30, pos_y+30, al_map_rgb(100, 100, 100));
+		al_flip_display();
+		al_clear_to_color(al_map_rgb(0, 0, 0));
 
 	}//close game loop
 
