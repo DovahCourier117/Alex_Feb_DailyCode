@@ -1,16 +1,24 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
-int main() {//start main
+enum KEYS {UP, DOWN, LEFT, RIGHT};
+
+int main(void) {//start main
+
+	bool done = false;//variable for game loop
+	int count = 0;
 
 	int width = 1824;//size of screen
 	int height = 1026;
 
-	bool done = false;//variable for game loop
+	int player_width;//size of player
+	int player_height;
 
-	float pos_x = width / 2;
-	float pos_y = height / 2;
+	float pos_x = width /2;
+	float pos_y = height -50;
+	
 
+	bool keys[4] = {false, false, false, false};
 
 	ALLEGRO_DISPLAY* display = NULL;
 	ALLEGRO_EVENT_QUEUE*event_queue = NULL;
@@ -31,8 +39,17 @@ int main() {//start main
 	event_queue = al_create_event_queue();
 
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
+	al_register_event_source(event_queue, al_get_display_event_source(display));
+
+	
 
 	while (!done) {//open game loop
+
+		count++;
+
+
+
+
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
 
@@ -41,39 +58,83 @@ int main() {//start main
 
 			switch (ev.keyboard.keycode) {//start switch
 
-			case ALLEGRO_KEY_UP:
-				pos_y -= 10;
-				break;
-			case ALLEGRO_KEY_DOWN:
-				pos_y += 10;
-				break;
+			//case ALLEGRO_KEY_UP:
+			//	keys[UP] = true;
+			//	break;
+
+			//case ALLEGRO_KEY_DOWN:
+			//	keys[DOWN] = true;
+			//	break;
+
 			case ALLEGRO_KEY_LEFT:
-				pos_x -= 10;
+				keys[LEFT] = true;
 				break;
+
 			case ALLEGRO_KEY_RIGHT:
-				pos_x += 10;
+				keys[RIGHT] = true;
 				break;
+
 			case ALLEGRO_KEY_ESCAPE://close game
 				done = true;
 				break;
+
 			}//end switch
 
 
-		}//end if
 
-		if (ev.type == ALLEGRO_EVENT_KEY_UP) {//open if
+		}//end if (keyboard input)
 
-			if(ev.keyboard.keycode)
+		else if (ev.type == ALLEGRO_EVENT_KEY_UP) {//makes it so input is deactivated after lifting key
+
+			switch (ev.keyboard.keycode) {//start switch
+
+			//case ALLEGRO_KEY_UP:
+			//	keys[UP] = false;
+			//	break;
+
+			//case ALLEGRO_KEY_DOWN:
+			//	keys[DOWN] = false;
+			//	break;
+
+			case ALLEGRO_KEY_LEFT:
+				keys[LEFT] = false;
+				break;
+
+			case ALLEGRO_KEY_RIGHT:
+				keys[RIGHT] = false;
+				break;
+
+			}
+		}
+
+		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {//allows closure via red 'x' in corner 
+			done = true; 
+		}
+
+		float speed = 10;//dictates speed of player
+
+		//dictates game borders and links input to movement
+		if (pos_y >= 10) {
+			pos_y -= keys[UP] * speed;
+		}
+		if (pos_y <= (height-10)) {
+			pos_y += keys[DOWN] * speed;
+		}
+		if (pos_x >= 10) {
+			pos_x -= keys[LEFT] * speed;
+		}
+		if (pos_x <= (width-25)) {
+			pos_x += keys[RIGHT] * speed;
+		}
 
 
-		}//close if
 
 
+		al_draw_filled_rectangle(pos_x, pos_y, pos_x+30, pos_y+30, al_map_rgb(100, 100, 100));//draw player
 
-		al_draw_filled_rectangle(pos_x, pos_y, pos_x+30, pos_y+30, al_map_rgb(100, 100, 100));
 		al_flip_display();
-		al_clear_to_color(al_map_rgb(0, 0, 0));
 
+		al_clear_to_color(al_map_rgb(0, 0, 0));
 	}//close game loop
 
 
