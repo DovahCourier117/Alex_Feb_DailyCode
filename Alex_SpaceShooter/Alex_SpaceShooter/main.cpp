@@ -130,7 +130,7 @@ int main(void) {//start main
 
 
 
-		al_draw_filled_rectangle(pos_x, pos_y, pos_x+30, pos_y+30, al_map_rgb(100, 100, 100));//draw player
+		al_draw_filled_rectangle(pos_x, pos_y, pos_x+50, pos_y+30, al_map_rgb(100, 100, 100));//draw player
 
 		al_flip_display();
 
