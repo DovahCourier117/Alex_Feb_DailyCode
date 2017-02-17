@@ -1,7 +1,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
-enum KEYS {UP, DOWN, LEFT, RIGHT};
+enum KEYS { UP, DOWN, LEFT, RIGHT };
 
 int main(void) {//start main
 
@@ -14,11 +14,11 @@ int main(void) {//start main
 	int player_width;//size of player
 	int player_height;
 
-	float pos_x = width /2;
-	float pos_y = height -50;
-	
+	float pos_x = width / 2;
+	float pos_y = height - 50;
 
-	bool keys[4] = {false, false, false, false};
+
+	bool keys[4] = { false, false, false, false };
 
 	ALLEGRO_DISPLAY* display = NULL;
 	ALLEGRO_EVENT_QUEUE*event_queue = NULL;
@@ -27,7 +27,7 @@ int main(void) {//start main
 		return -1;
 
 	display = al_create_display(width, height);//create display
-	
+
 
 	if (!display)//test display
 		return -1;
@@ -41,7 +41,7 @@ int main(void) {//start main
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 
-	
+
 
 	while (!done) {//open game loop
 
@@ -108,29 +108,29 @@ int main(void) {//start main
 		}
 
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {//allows closure via red 'x' in corner 
-			done = true; 
+			done = true;
 		}
 
-		float speed = 10;//dictates speed of player
+		float speed = 25;//dictates speed of player
 
-		//dictates game borders and links input to movement
-		if (pos_y >= 10) {
-			pos_y -= keys[UP] * speed;
-		}
-		if (pos_y <= (height-10)) {
-			pos_y += keys[DOWN] * speed;
-		}
+							//dictates game borders and links input to movement//
+		//if (pos_y >= 10) {
+		//	pos_y -= keys[UP] * speed;
+		//}
+		//if (pos_y <= (height - 10)) {
+		//	pos_y += keys[DOWN] * speed;
+		//}
 		if (pos_x >= 10) {
 			pos_x -= keys[LEFT] * speed;
 		}
-		if (pos_x <= (width-25)) {
+		if (pos_x <= (width - 25)) {
 			pos_x += keys[RIGHT] * speed;
 		}
 
 
 
 
-		al_draw_filled_rectangle(pos_x, pos_y, pos_x+50, pos_y+30, al_map_rgb(100, 100, 100));//draw player
+		al_draw_filled_rectangle(pos_x, pos_y, pos_x + 50, pos_y + 30, al_map_rgb(100, 100, 100));//draw player
 
 		al_flip_display();
 
