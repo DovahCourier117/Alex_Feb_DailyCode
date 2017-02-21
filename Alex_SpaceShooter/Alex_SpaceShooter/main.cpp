@@ -1,4 +1,5 @@
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
 
 enum KEYS { UP, DOWN, LEFT, RIGHT };
@@ -22,6 +23,7 @@ int main(void) {//start main
 
 	ALLEGRO_DISPLAY* display = NULL;
 	ALLEGRO_EVENT_QUEUE*event_queue = NULL;
+	ALLEGRO_FONT *font18 = al_load_font("arial.ttf", 18, 0);
 
 	if (!al_init())//initialize allegro
 		return -1;
@@ -33,6 +35,7 @@ int main(void) {//start main
 		return -1;
 
 	al_init_primitives_addon();//initializes allegro graphics library
+	al_init_font_addon();//initializes font library
 
 	al_install_keyboard();//allows keyboard input
 
@@ -45,8 +48,10 @@ int main(void) {//start main
 
 	while (!done) {//open game loop
 
-		count++;
+		count++;//counts main loop up
 
+		al_draw_textf(font18, al_map_rgb(255, 255, 255), width/2, height/2, ALLEGRO_ALIGN_CENTRE,
+			"Frames: %i", count);
 
 
 
