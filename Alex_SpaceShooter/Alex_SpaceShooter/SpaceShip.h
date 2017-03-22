@@ -24,6 +24,7 @@ public:
 	void MoveLeft();
 	void MoveRight();
 
+
 	void ResetAnimation(int position);
 
 
